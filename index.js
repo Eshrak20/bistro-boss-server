@@ -2,8 +2,11 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
+const SSLCommerzPayment = require('sslcommerz-lts')
 require("dotenv").config();
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
+
+
 
 const port = process.env.PORT || 5000;
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.exiwnj2.mongodb.net/?retryWrites=true&w=majority`;
@@ -24,6 +27,10 @@ const client = new MongoClient(uri, {
     deprecationErrors: true,
   },
 });
+
+const store_id = process.env.STORE_ID
+const store_passwd = process.env.STORE_PASS
+const is_live = false //true for live, false for sandbox
 
 // Middleware to verify JWT
 const verifyJWT = (req, res, next) => {
